@@ -1,0 +1,29 @@
+{
+  "name": "react-nyt",
+  "version": "1.0.0",
+  "description": "A New York Times news search that stores results in a database",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tygee713/React-NYT.git"
+  },
+  "author": "Tyler Geerdts",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tygee713/React-NYT/issues"
+  },
+  "homepage": "https://github.com/tygee713/React-NYT#readme",
+  "dependencies": {
+    "axios": "^0.15.3",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongoose": "^4.7.2",
+    "morgan": "^1.7.0",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1"
+  }
+}
