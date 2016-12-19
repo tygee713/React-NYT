@@ -6,7 +6,7 @@ var Saved = require("./children/Saved.js");
 
 var helpers = require("./utils/helpers.js");
 
-var Main = React.CreateClass({
+var Main = React.createClass({
   getInitialState: function() {
     return { searchTerm: "", startYear: "", endYear: "", results: [], saved: [] };
   },
@@ -21,7 +21,8 @@ var Main = React.CreateClass({
   },
   componentDidUpdate: function() {
     //runs the query for the news topic
-    helpers.runQuery(this.state.searchTerm).then(function(data) {
+    console.log("component updated!");
+    helpers.runQuery(this.state.searchTerm, this.state.startYear, this.state.endYear).then(function(data) {
       if (data !== this.state.results) {
         this.setState({ results: data });
       }
@@ -33,7 +34,7 @@ var Main = React.CreateClass({
   updateSaved: function(saved) {
     this.setState({ saved: saved });
   },
-  render = function() {
+  render: function() {
     return (
       <div className="container">
         <div className="row">

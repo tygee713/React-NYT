@@ -15,14 +15,14 @@ var Search = React.createClass({
   handleEndChange: function(event) {
     this.setState({ end: event.target.value });
   },
-  handleSubmit: function() {
+  handleSubmit: function(event) {
     event.preventDefault();
 
     // Set the parent to have the search term
     this.props.setTerm(this.state.term, this.state.start, this.state.end);
     this.setState({ term: "", start: "", end: "" });
   },
-  render = function() {
+  render: function() {
     return (
       <div className="panel panel-default">
         <div className="panel-heading">

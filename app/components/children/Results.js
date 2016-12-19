@@ -8,7 +8,7 @@ var Results = React.createClass({
 
   },
 
-  render = function() {
+  render: function() {
     return (
       <div className="panel panel-default">
         <div className="panel-heading">
@@ -18,12 +18,14 @@ var Results = React.createClass({
           {/* loops through the articles array passed in as a prop */}
           {this.props.articles.map(function(search, i) {
             return (
+              <div>
               <h2 key={i}>{search.title}</h2>
               <form onSubmit = {this.handleSubmit}>
                 <input type="hidden" name="title" value="search.title"/>
                 <input type="hidden" name="url" value="search.url"/>
                 <input type="submit" value="Save"/>
               </form>
+              </div>
             );
           })}
         </div>
