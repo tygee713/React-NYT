@@ -4,7 +4,7 @@ var helper = {
 
   //runs the query to the NYT API to get news articles
   runQuery: function(topic) {
-
+    
   },
 
   //returns the saved articles in the database
@@ -16,4 +16,4 @@ var helper = {
   postSaved: function(article) {
     return axios.post("/api", article);
   }
-}
+};

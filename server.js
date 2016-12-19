@@ -48,9 +48,7 @@ app.get("/api", function(req, res) {
 
 app.post("/api/save", function(req, res) {
   console.log("BODY: " + req.body.title);
-
-  // Here we'll save the location based on the JSON input.
-  // We'll use Date.now() to always get the current date time
+  
   Article.create({
     title: req.body.title,
     date: Date.now(),
@@ -60,11 +58,15 @@ app.post("/api/save", function(req, res) {
       console.log(err);
     }
     else {
-      res.send("Saved Search");
+      res.send("Saved article");
     }
   });
 });
 
 app.post("/api/delete", function(req, res) {
-  
+  Article.find({
+    _id: req.body.id
+  })
+  .remove()
+  .exec();
 });

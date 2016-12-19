@@ -8,7 +8,7 @@ var helpers = require("./utils/helpers.js");
 
 var Main = React.CreateClass({
   getInitialState: function() {
-    return { searchTerm: "", results: [], saved: [] };
+    return { searchTerm: "", startYear: "", endYear: "", results: [], saved: [] };
   },
   componentDidMount: function() {
     //gets the saved stories when the page loads
@@ -27,8 +27,8 @@ var Main = React.CreateClass({
       }
     }.bind(this));
   },
-  setTerm: function(term) {
-    this.setState({ searchTerm: term });
+  setTerm: function(term, startYear, endYear) {
+    this.setState({ searchTerm: term, startYear: startYear, endYear: endYear });
   },
   updateSaved: function(saved) {
     this.setState({ saved: saved });
