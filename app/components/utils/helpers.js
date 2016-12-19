@@ -1,4 +1,5 @@
 var axios = require("axios");
+var jsonp = require("jsonp");
 
 var helper = {
 
@@ -9,8 +10,9 @@ var helper = {
     var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey
       + "&q=" + queryTerm + "&begin_date=" + startYear + "&end_date=" + endYear;
 
-    return axios.get(queryURL)
+    return axios.get(url: queryURL, withCredentials: true)
     .then(function(NYTData) {
+    // jsonp(queryURL, null, function(err, NYTData) {
       console.log(NYTData.response);
       return NYTData.response.formatted;
     });

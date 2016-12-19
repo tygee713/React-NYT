@@ -17,16 +17,16 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 app.use(express.static("./public"));
 
-mongoose.connect("");
-var db = mongoose.connection;
+// mongoose.connect("");
+// var db = mongoose.connection;
 
-db.on("error", function(err) {
-  console.log("Mongoose Error: ", err);
-});
+// db.on("error", function(err) {
+//   console.log("Mongoose Error: ", err);
+// });
 
-db.once("open", function() {
-  console.log("Mongoose connection successful.");
-});
+// db.once("open", function() {
+//   console.log("Mongoose connection successful.");
+// });
 
 app.get("/", function(req, res) {
   res.sendFile(__dirname + "/public/index.html");
@@ -48,7 +48,7 @@ app.get("/api", function(req, res) {
 
 app.post("/api/save", function(req, res) {
   console.log("BODY: " + req.body.title);
-  
+
   Article.create({
     title: req.body.title,
     date: Date.now(),
@@ -69,4 +69,9 @@ app.post("/api/delete", function(req, res) {
   })
   .remove()
   .exec();
+});
+
+// Listener
+app.listen(PORT, function() {
+  console.log("App listening on PORT: " + PORT);
 });
