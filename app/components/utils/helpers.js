@@ -8,13 +8,13 @@ var helper = {
     var authKey = '02f755e84aa34b25bfb1063dadb369e2';
 
     var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey
-      + "&q=" + queryTerm + "&begin_date=" + startYear + "&end_date=" + endYear;
+      + "&q=" + queryTerm + "&begin_date=" + startYear + "0101&end_date=" + endYear + "1231";
 
-    return axios.get(url: queryURL, withCredentials: true)
+    return axios.get(queryURL)
     .then(function(NYTData) {
     // jsonp(queryURL, null, function(err, NYTData) {
-      console.log(NYTData.response);
-      return NYTData.response.formatted;
+      // console.log(NYTData.data.response.docs);
+      return NYTData.data.response.docs;
     });
 
   },
@@ -26,7 +26,7 @@ var helper = {
 
   //saves a new article to the database
   postSaved: function(article) {
-    return axios.post("/api", article);
+    return axios.post("/api/save", {article: article});
   }
 };
 

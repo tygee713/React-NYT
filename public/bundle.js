@@ -22041,7 +22041,11 @@
 	  setTerm: function setTerm(term, startYear, endYear) {
 	    this.setState({ searchTerm: term, startYear: startYear, endYear: endYear });
 	  },
-	  updateSaved: function updateSaved(saved) {
+	  saveArticle: function saveArticle(article) {
+	    helpers.postSaved(article);
+	  },
+	  updateSaved: function updateSaved() {
+	    var saved = helpers.getSaved();
 	    this.setState({ saved: saved });
 	  },
 	  render: function render() {
@@ -22077,7 +22081,7 @@
 	        React.createElement(
 	          "div",
 	          { className: "row" },
-	          React.createElement(Results, { articles: this.state.results, updateSaved: this.updateSaved })
+	          React.createElement(Results, { articles: this.state.results, updateSaved: this.updateSaved, saveArticle: this.saveArticle })
 	        )
 	      ),
 	      React.createElement(
@@ -22233,12 +22237,21 @@
 	var Results = React.createClass({
 	  displayName: "Results",
 	
-	
+	  getInitialState: function getInitialState() {
+	    return { articles: [] };
+	  },
 	  handleSubmit: function handleSubmit(event) {
-	    event.preventDefault();
+	    // event.preventDefault();
+	    // console.log(event.target.value);
+	    console.log(this.state.articles[event.target.value].title);
+	    this.props.saveArticle(this.state.articles[event.target.value]);
+	    this.props.updateSaved();
 	  },
 	
 	  render: function render() {
+	    var thisComp = this;
+	    var articles = [];
+	
 	    return React.createElement(
 	      "div",
 	      { className: "panel panel-default" },
@@ -22255,25 +22268,26 @@
 	        "div",
 	        { className: "panel-body" },
 	        this.props.articles.map(function (search, i) {
+	          thisComp.state.articles.push({ title: search.headline.main, url: search.web_url });
+	
 	          return React.createElement(
 	            "div",
 	            null,
 	            React.createElement(
 	              "h2",
 	              { key: i },
-	              search.title
+	              search.headline.main
 	            ),
 	            React.createElement(
-	              "form",
-	              { onSubmit: this.handleSubmit },
-	              React.createElement("input", { type: "hidden", name: "title", value: "search.title" }),
-	              React.createElement("input", { type: "hidden", name: "url", value: "search.url" }),
-	              React.createElement("input", { type: "submit", value: "Save" })
+	              "button",
+	              { className: "btn btn-success", type: "button", onClick: thisComp.handleSubmit, value: i },
+	              "Save"
 	            )
 	          );
 	        })
 	      )
 	    );
+	    // this.setState({ articles: articles });
 	  }
 	});
 	
@@ -22296,8 +22310,34 @@
 	  render: function render() {
 	    return React.createElement(
 	      "div",
-	      null,
-	      "Hello"
+	      { className: "panel panel-default" },
+	      React.createElement(
+	        "div",
+	        { className: "panel-heading" },
+	        React.createElement(
+	          "h3",
+	          { className: "panel-title text-center" },
+	          "Saved Articles"
+	        )
+	      ),
+	      React.createElement(
+	        "div",
+	        { className: "panel-body text-center" },
+	        this.props.saved.map(function (search, i) {
+	          return React.createElement(
+	            "p",
+	            { key: i },
+	            React.createElement(
+	              "a",
+	              { href: "{search.url}" },
+	              search.title
+	            ),
+	            " (Saved on: ",
+	            search.date,
+	            ")"
+	          );
+	        })
+	      )
 	    );
 	  }
 	});
@@ -22322,12 +22362,12 @@
 	  runQuery: function runQuery(queryTerm, startYear, endYear) {
 	    var authKey = '02f755e84aa34b25bfb1063dadb369e2';
 	
-	    var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey + "&q=" + queryTerm + "&begin_date=" + startYear + "&end_date=" + endYear;
+	    var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=" + authKey + "&q=" + queryTerm + "&begin_date=" + startYear + "0101&end_date=" + endYear + "1231";
 	
 	    return axios.get(queryURL).then(function (NYTData) {
 	      // jsonp(queryURL, null, function(err, NYTData) {
-	      console.log(NYTData.response);
-	      return NYTData.response.formatted;
+	      // console.log(NYTData.data.response.docs);
+	      return NYTData.data.response.docs;
 	    });
 	  },
 	
@@ -22338,7 +22378,7 @@
 	
 	  //saves a new article to the database
 	  postSaved: function postSaved(article) {
-	    return axios.post("/api", article);
+	    return axios.post("/api/save", { article: article });
 	  }
 	};
 	

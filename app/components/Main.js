@@ -31,7 +31,11 @@ var Main = React.createClass({
   setTerm: function(term, startYear, endYear) {
     this.setState({ searchTerm: term, startYear: startYear, endYear: endYear });
   },
-  updateSaved: function(saved) {
+  saveArticle: function(article) {
+    helpers.postSaved(article);
+  },
+  updateSaved: function() {
+    var saved = helpers.getSaved();
     this.setState({ saved: saved });
   },
   render: function() {
@@ -56,7 +60,7 @@ var Main = React.createClass({
 
           <div className="row">
 
-            <Results articles={this.state.results} updateSaved={this.updateSaved} />
+            <Results articles={this.state.results} updateSaved={this.updateSaved} saveArticle = {this.saveArticle}/>
 
           </div>
 

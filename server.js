@@ -17,16 +17,16 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 app.use(express.static("./public"));
 
-// mongoose.connect("");
-// var db = mongoose.connection;
+mongoose.connect("localhost:3001");
+var db = mongoose.connection;
 
-// db.on("error", function(err) {
-//   console.log("Mongoose Error: ", err);
-// });
+db.on("error", function(err) {
+  console.log("Mongoose Error: ", err);
+});
 
-// db.once("open", function() {
-//   console.log("Mongoose connection successful.");
-// });
+db.once("open", function() {
+  console.log("Mongoose connection successful.");
+});
 
 app.get("/", function(req, res) {
   res.sendFile(__dirname + "/public/index.html");
