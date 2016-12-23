@@ -17,7 +17,7 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 app.use(express.static("./public"));
 
-mongoose.connect("localhost:3001");
+mongoose.connect("127.0.0.1");
 var db = mongoose.connection;
 
 db.on("error", function(err) {

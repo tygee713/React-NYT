@@ -10,7 +10,6 @@ var Results = React.createClass({
     console.log(this.state.articles[event.target.value].title);
     this.props.saveArticle(this.state.articles[event.target.value]);
     this.props.updateSaved();
-
   },
 
   render: function() {

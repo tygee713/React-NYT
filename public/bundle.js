@@ -22036,12 +22036,19 @@
 	      if (data !== this.state.results) {
 	        this.setState({ results: data });
 	      }
+	      helpers.getSaved().then(function (response) {
+	        console.log("Getting saved stories: " + response.data);
+	        if (response !== this.state.saved) {
+	          this.setState({ saved: response.data });
+	        }
+	      }.bind(this));
 	    }.bind(this));
 	  },
 	  setTerm: function setTerm(term, startYear, endYear) {
 	    this.setState({ searchTerm: term, startYear: startYear, endYear: endYear });
 	  },
 	  saveArticle: function saveArticle(article) {
+	    console.log("The article is: " + article.title);
 	    helpers.postSaved(article);
 	  },
 	  updateSaved: function updateSaved() {
@@ -22308,6 +22315,7 @@
 	  displayName: "Saved",
 	
 	  render: function render() {
+	    console.log("Rendering saved, props.saved: " + this.props.saved);
 	    return React.createElement(
 	      "div",
 	      { className: "panel panel-default" },
@@ -22378,7 +22386,7 @@
 	
 	  //saves a new article to the database
 	  postSaved: function postSaved(article) {
-	    return axios.post("/api/save", { article: article });
+	    return axios.post("/api/save", { title: article.title, url: article.url });
 	  }
 	};
 	

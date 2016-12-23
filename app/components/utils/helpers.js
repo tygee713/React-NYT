@@ -26,7 +26,7 @@ var helper = {
 
   //saves a new article to the database
   postSaved: function(article) {
-    return axios.post("/api/save", {article: article});
+    return axios.post("/api/save", {title: article.title, url: article.url});
   }
 };
 

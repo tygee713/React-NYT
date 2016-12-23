@@ -26,12 +26,20 @@ var Main = React.createClass({
       if (data !== this.state.results) {
         this.setState({ results: data });
       }
+      helpers.getSaved().then(function(response) {
+        console.log("Getting saved stories: " + response.data);
+        if (response !== this.state.saved) {
+          this.setState({ saved: response.data });
+        }
+      }.bind(this))
     }.bind(this));
+
   },
   setTerm: function(term, startYear, endYear) {
     this.setState({ searchTerm: term, startYear: startYear, endYear: endYear });
   },
   saveArticle: function(article) {
+    console.log("The article is: " + article.title);
     helpers.postSaved(article);
   },
   updateSaved: function() {

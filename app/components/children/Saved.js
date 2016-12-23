@@ -2,6 +2,7 @@ var React = require("react");
 
 var Saved = React.createClass({
   render: function() {
+    console.log("Rendering saved, props.saved: " + this.props.saved);
     return (
       <div className="panel panel-default">
         <div className="panel-heading">
